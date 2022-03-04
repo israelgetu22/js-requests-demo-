@@ -53,9 +53,12 @@ function getAllChars() {
 function getOneChar(event) {
   clearCharacters();
 
-  axios.get(`${baseURL}/character/${event.target.id}`).then(function (res) {
-    createCharacterCard(res.data);
-  });
+  axios
+    .get(`${baseURL}/character/${event.target.id}`)
+    .then(function (res) {
+      createCharacterCard(res.data);
+    })
+    .catch((err) => console.log(err));
 }
 
 function getOldChars(event) {
@@ -63,11 +66,14 @@ function getOldChars(event) {
 
   clearCharacters();
 
-  axios.get(`${baseURL}/character/?age=${ageInput.value}`).then(function (res) {
-    for (let i = 0; i < res.data.length; i++) {
-      createCharacterCard(res.data[i]);
-    }
-  });
+  axios
+    .get(`${baseURL}/character/?age=${ageInput.value}`)
+    .then(function (res) {
+      for (let i = 0; i < res.data.length; i++) {
+        createCharacterCard(res.data[i]);
+      }
+    })
+    .catch((err) => console.log(err));
 
   ageInput.value = "";
 }
@@ -77,7 +83,7 @@ function createNewChar(event) {
 
   clearCharacters();
 
-  let newLikes = [...newLikesText.value.split(",")];
+  let newLikes = [...newLikesText.value.trim().split(",")];
 
   let body = {
     firstName: newFirstInput.value,
